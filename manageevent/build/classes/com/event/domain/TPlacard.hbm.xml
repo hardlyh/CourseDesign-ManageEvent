@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-11 9:12:32 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.event.domain.TPlacard" table="t_placard" catalog="manageevent">
+        <id name="placardId" type="java.lang.Integer">
+            <column name="placard_id" />
+            <generator class="identity" />
+        </id>
+        <property name="placardTitle" type="string">
+            <column name="placard_title" length="50">
+                <comment>&#185;&#171;&#184;&#230;&#181;&#196;&#177;&#234;&#204;&#226;</comment>
+            </column>
+        </property>
+        <property name="placardContent" type="string">
+            <column name="placard_content" length="65535">
+                <comment>&#185;&#171;&#184;&#230;&#181;&#196;&#196;&#218;&#200;&#221;</comment>
+            </column>
+        </property>
+        <property name="placardUrl" type="string">
+            <column name="placard_url" length="50">
+                <comment>&#185;&#171;&#184;&#230;logo&#181;&#196;&#181;&#216;&#214;&#183;</comment>
+            </column>
+        </property>
+        <property name="userName" type="java.lang.Integer">
+            <column name="user_name">
+                <comment>&#181;&#199;&#194;&#189;&#200;&#203;&#181;&#196;id</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Dashboard | Klorofil - Free Bootstrap Dashboard Template</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+</head>
+
+<body>
+    <!-- WRAPPER -->
+    <div id="wrapper">
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="brand">
+                <a href="index.html"><img src="assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-btn">
+                    <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <div class="input-group">
+                        <input type="text" value="" class="form-control" placeholder="搜 索...">
+                        <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                    </div>
+                </form>
+                <div class="navbar-btn navbar-btn-right">
+                </div>
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="lnr lnr-user"></i> <span>我的信息</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
+                            </ul>
+                        </li>
+                        <!-- <li>
+							<a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+						</li> -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END NAVBAR -->
+        <!-- LEFT SIDEBAR -->
+        <div id="sidebar-nav" class="sidebar">
+            <div class="sidebar-scroll">
+                <nav>
+                    <ul class="nav">
+                        <li>
+                            <a href="#xtht" data-toggle="collapse" class="collapsed"><i class="lnr lnr-apartment"></i> <span>系统后台</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="xtht" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="member.html" class="">成员管理</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#kh" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>客户</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="kh" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="event_management.html" class="">事件管理</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="active" href="#zwcl" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>总未处理事件</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="zwcl" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="unhandled_event.html" class="">未处理事件</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#zls" data-toggle="collapse" class="collapsed"><i class="lnr lnr-map"></i> <span>总历史处理事件</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="zls" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="history_event.html" class="">历史事件</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#wdcl" data-toggle="collapse" class="collapsed"><i class="lnr lnr-inbox"></i> <span>我的处理事件</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="wdcl" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="handle_event.html" class="">处理事件</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#wddfk" data-toggle="collapse" class="collapsed"><i class="fa fa-credit-card"></i> <span>我的待反馈事件</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="wddfk" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="feedback_event.html" class="">待部门反馈事件</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#lt" data-toggle="collapse" class="collapsed"><i class="lnr lnr-heart"></i> <span>聊天页</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="lt" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="chat.html" class="">聊天框</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#tj" data-toggle="collapse" class="collapsed"><i class="fa fa-database"></i> <span>统计</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="tj" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="personnel.html" class="">人员</a></li>
+                                    <li><a href="event.html" class="">事件</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#gg" data-toggle="collapse" class="collapsed"><i class="fa fa-calendar"></i> <span>公告</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="gg" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="notice.html" class="">公告</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- END LEFT SIDEBAR -->
+        <!-- MAIN -->
+        <div class="main">
+            <!-- MAIN CONTENT -->
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="" style="font-size: 20px;color:#708090;"><b>处理事件</b></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form>
+                            <div class="col-md-12">
+                                <br/>
+                                <p style="font-size: 15px;color:#708090;">
+                                    开始时间:
+                                    <input type="date" style="width: 15%;height: 30px;"> &nbsp;结束时间:
+                                    <input type="date" style="width: 15%;height: 30px;">
+                                    <input type="text" name="" placeholder="关键词" style="height: 30px;width: 15%;margin-left: 15%;">
+                                    <button type="button" class="btn btn-primary" style="height: 30px;">确定</button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- BASIC TABLE -->
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <table class="table">
+                                    <colgroup>
+											<col style="width: 5%">
+											<col style="width: 15%">
+											<col style="width: 30%;">
+											<col style="width: 15%">
+											<col style="width: 8%">
+											<col style="width: 8%">
+											<col style="width: 19%">
+										</colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>标题</th>
+                                                <th>内容</th>
+                                                <th>状态</th>
+                                                <th>发布时间</th>
+                                                <th>处理时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Steve</td>
+                                                <td>Jobs</td>
+                                                <td>@steve</td>
+                                                <td>1</td>
+                                                <td>Steve</td>
+                                                <td>
+                                                    <span class="label label-primary tupian">图片</span>
+                                                    <span class="label label-success distribution">分配</span>
+                                                    <span class="label label-default">删除</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END BASIC TABLE -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" id="imagelist">
+                            <!-- RECENT PURCHASES -->
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title" style="font-size: 18px;color:#708090;"><b>查看图片</b></h3>
+                                    <div class="right">
+                                        <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-unstyled row">
+                                        <li style="margin-left: 10%;">
+                                            <img src="assets/img/user-medium.png" alt="提示">
+                                        </li>
+                                        <br/>
+                                        <li style="margin-left: 10%;">
+                                            <img src="assets/img/user-medium.png" alt="提示">
+                                        </li>
+                                        <br/>
+                                        <li style="margin-left: 10%;">
+                                            <img src="assets/img/user-medium.png" alt="提示">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- END RECENT PURCHASES -->
+                        </div>
+                        <div class="col-md-6" id="allot">
+                            <!-- RECENT PURCHASES -->
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title" style="font-size: 18px;color:#708090;"><b>分配客服</b></h3>
+                                    <div class="right">
+                                        <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-unstyled row">
+                                        <li style="margin-left: 10%;">
+                                            <label class="fancy-radio">
+                                                <input name="gender" value="male" type="radio">
+                                                <span><i></i>Male</span>
+                                            </label>
+                                        </li>
+                                        <br/>
+                                        <li style="margin-left: 10%;">
+                                            <label class="fancy-radio">
+                                                <input name="gender" value="male" type="radio">
+                                                <span><i></i>Male</span>
+                                            </label>
+                                        </li>
+                                        <br/>
+                                        <li style="margin-left: 10%;">
+                                            <label class="fancy-radio">
+                                                <input name="gender" value="male" type="radio">
+                                                <span><i></i>Male</span>
+                                            </label>
+                                        </li>
+                                        <br/>
+                                    </ul>
+                                    <button type="button" class="btn btn-primary" style="float: right;">确定</button>
+                                </div>
+                            </div>
+                            <!-- END RECENT PURCHASES -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT -->
+        </div>
+        <!-- END MAIN -->
+        <div class="clearfix"></div>
+        <footer>
+            <div class="container-fluid">
+                <p class="copyright">&copy; 2017 <a href="#" target="_blank">Theme I Need</a>. All Rights Reserved. More Templates <a href="#" title="模板之家">DAWA</a> - Collect from <a href="#" title="" target="_blank">————</a></p>
+            </div>
+        </footer>
+    </div>
+    <!-- END WRAPPER -->
+    <!-- Javascript -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="assets/scripts/klorofil-common.js"></script>
+    <script type="text/javascript">
+    $("#imagelist").hide();
+
+    $("#allot").hide();
+
+
+            $(".tupian").click(function() {
+                if ($("#imagelist").is(':hidden')) {
+                    $("#imagelist").show(1000, 'linear');
+                } else {
+                    $("#imagelist").hide(1000, 'linear');
+                }
+
+            });
+
+
+            $(".distribution").click(function() {
+
+                if ($("#allot").is(':hidden')) {
+                    $("#allot").show(1000, 'linear');
+                } else {
+                    $("#allot").hide(1000, 'linear');
+                }
+
+            });
+    </script>
+</body>
+
+</html>

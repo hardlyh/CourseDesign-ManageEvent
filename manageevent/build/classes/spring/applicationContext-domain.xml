@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+		
+	<bean id="commonDao" class="com.event.dao.base.impl.CommonDaoImpl" abstract="true">
+	  	<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<!--TUser  -->
+	
+	<bean id="TUserDao" class="com.event.dao.impl.TUserDaoImpl" parent="commonDao"></bean>
+	
+	<bean id="tUserService" class="com.event.service.impl.TUserServiceImpl">
+		<property name="commonDao" ref="TUserDao"></property>
+	</bean>
+	
+	<bean id="tUserAction" class="com.event.action.TUserAction" scope="prototype">
+		<property name="tUserService" ref="tUserService"></property>
+	</bean>
+	
+	<!-- TEvent -->
+	
+	<bean id="TEventDao" class="com.event.dao.impl.TEventDaoImpl" parent="commonDao"></bean>
+	
+	<bean id="TEventService" class="com.event.service.impl.TEventServiceImpl">
+		<property name="commonDao" ref="TEventDao"></property>
+	</bean>
+	
+	<bean id="tEventAction" class="com.event.action.TEventAction" scope="prototype">
+		<property name="tEventService" ref="TEventService"></property>		
+	</bean>
+	
+	<bean id="hisAction" class="com.event.action.HistoryEventAction">
+		<property name="tEventService" ref="TEventService"></property>	
+	</bean>
+		
+		
+</beans>

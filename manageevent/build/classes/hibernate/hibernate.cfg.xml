@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- 配置Hibernate:属性配置参考 Hibernate发型包\project\etc\hibernate.properties -->
+		<!-- JDBC的基本链接 -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password"></property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/manageevent</property>
+		<!-- 配置数据库方言 -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- 根据映射产生表结构的类型: create-drop:木有表结构创建，下次启动时删除重新创建。适合学习阶段 create：只做创建 update：探测表结构够的变化，对于数据库没有的，进行更新操作。适合学习阶段 
+			validate：对比与数据库的结构 -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- 显示sql语句及格式：开发调试阶段非常有用 -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<!-- 告知映射文件 -->
+		
+	</session-factory>
+</hibernate-configuration>

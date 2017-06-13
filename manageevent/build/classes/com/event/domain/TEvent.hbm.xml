@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-11 9:12:32 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.event.domain.TEvent" table="t_event" catalog="manageevent">
+        <id name="eventId" type="java.lang.Integer">
+            <column name="event_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="TUserByLeadId" class="com.event.domain.TUser" fetch="select">
+            <column name="lead_id">
+                <comment>&#215;&#233;&#179;&#164;id</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="TUserByEventCommitId" class="com.event.domain.TUser" fetch="select">
+            <column name="event_commit_id">
+                <comment>&#204;&#225;&#189;&#187;&#211;&#195;&#187;&#167;&#181;&#196;id</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="TUserByKefuId" class="com.event.domain.TUser" fetch="select">
+            <column name="kefu_id">
+                <comment>&#191;&#205;&#183;&#254;id</comment>
+            </column>
+        </many-to-one>
+        <property name="eventTitle" type="string">
+            <column name="event_title" length="50">
+                <comment>&#202;&#194;&#188;&#254;&#177;&#234;&#204;&#226;</comment>
+            </column>
+        </property>
+        <property name="eventContent" type="string">
+            <column name="event_content" length="65535">
+                <comment>&#202;&#194;&#188;&#254;&#196;&#218;&#200;&#221;</comment>
+            </column>
+        </property>
+        <property name="eventStarttime" type="date">
+            <column name="event_starttime" length="19">
+                <comment>&#202;&#194;&#188;&#254;&#183;&#162;&#178;&#188;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+         <property name="eventEndtime" type="date">
+            <column name="event_endtime" length="19">
+                <comment>&#202;&#194;&#188;&#254;&#183;&#162;&#178;&#188;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+        <property name="eventUrl" type="string">
+            <column name="event_url" length="100">
+                <comment>&#202;&#194;&#188;&#254;&#205;&#188;&#198;&#172;&#181;&#216;&#214;&#183;</comment>
+            </column>
+        </property>
+        <property name="eventStatus" type="java.lang.Integer">
+            <column name="event_status">
+                <comment>&#202;&#194;&#188;&#254;&#215;&#180;&#204;&#172; 01&#206;&#180;&#180;&#166;&#192;&#237;02&#210;&#209;&#190;&#173;&#180;&#166;&#192;&#237;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

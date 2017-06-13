@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-11 9:12:32 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.event.domain.TTalk" table="t_talk" catalog="manageevent">
+        <id name="talkId" type="java.lang.Integer">
+            <column name="talk_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="TUserByKefuId" class="com.event.domain.TUser" fetch="select">
+            <column name="kefu_id">
+                <comment>&#191;&#205;&#183;&#254;id</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="TUserByKehuId" class="com.event.domain.TUser" fetch="select">
+            <column name="kehu_id">
+                <comment>&#191;&#205;&#187;&#167;id</comment>
+            </column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-11 9:12:32 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.event.domain.TUser" table="t_user" catalog="manageevent">
+        <id name="userId" type="int">
+            <column name="user_id" />
+            <generator class="increment" />
+        </id>
+        <property name="userRealname" type="string">
+            <column name="user_realname" length="20">
+                <comment>&#211;&#195;&#187;&#167;&#213;&#230;&#202;&#181;&#208;&#213;&#195;&#251;</comment>
+            </column>
+        </property>
+        <property name="userPassword" type="string">
+            <column name="user_password" length="20">
+                <comment>&#211;&#195;&#187;&#167;&#195;&#220;&#194;&#235;</comment>
+            </column>
+        </property>
+        <property name="userPriviliage" type="java.lang.Integer">
+            <column name="user_priviliage">
+                <comment>
+                &#200;&#168;&#207;&#222;01&#180;&#250;&#177;&#237;&#185;&#220;&#192;&#237;&#212;&#177;02&#215;&#233;&#179;&#164;03&#191;&#205;&#183;&#254;04&#191;&#205;&#187;&#167;</comment>
+            </column>
+        </property>
+        <property name="userName" type="string">
+            <column name="user_name" length="20">
+                <comment>&#211;&#195;&#187;&#167;&#181;&#199;&#194;&#188;&#195;&#251;</comment>
+            </column>
+        </property>
+        <property name="userPhone" type="string">
+            <column name="user_phone" length="50">
+                <comment>&#211;&#195;&#187;&#167;&#181;&#231;&#187;&#176;</comment>
+            </column>
+        </property>
+        <property name="userEmail" type="string">
+            <column name="user_email" length="100">
+                <comment>&#211;&#195;&#187;&#167;&#211;&#202;&#207;&#228;</comment>
+            </column>
+        </property>
+        <property name="userMember" type="java.lang.Integer">
+            <column name="user_member" />
+        </property>
+        <property name="userMax" type="java.lang.Integer">
+            <column name="user_max">
+                <comment>&#191;&#205;&#183;&#254;&#215;&#238;&#180;&#243;&#189;&#211;&#181;&#165;&#202;&#253;</comment>
+            </column>
+        </property>
+        <property name="userComplete" type="java.lang.Integer">
+            <column name="user_complete">
+                <comment>&#191;&#205;&#183;&#254;&#205;&#234;&#179;&#201;&#181;&#196;&#202;&#253;</comment>
+            </column>
+        </property>
+        <property name="userDepartfb" type="java.lang.Integer">
+            <column name="user_departfb">
+                <comment>&#180;&#253;&#178;&#191;&#195;&#197;&#183;&#180;&#192;&#161;</comment>
+            </column>
+        </property>
+        <property name="userUserfb" type="java.lang.Integer">
+            <column name="user_userfb">
+                <comment>&#180;&#253;&#211;&#195;&#187;&#167;&#183;&#180;&#192;&#161;</comment>
+            </column>
+        </property>
+        <set name="TEventsForEventCommitId"  inverse="true" order-by="eventStarttime desc">
+            <key>
+                <column name="event_commit_id">
+                    <comment>&#204;&#225;&#189;&#187;&#211;&#195;&#187;&#167;&#181;&#196;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.event.domain.TEvent" />
+        </set>
+        <set name="TTalksForKehuId" inverse="true" order-by="eventStarttime desc">
+            <key>
+                <column name="kehu_id">
+                    <comment>&#191;&#205;&#187;&#167;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.event.domain.TTalk" />
+        </set>
+        <set name="TEventsForKefuId" inverse="true" order-by="eventStarttime desc">
+            <key>
+                <column name="kefu_id">
+                    <comment>&#191;&#205;&#183;&#254;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.event.domain.TEvent" />
+        </set>
+        <set name="TRecords" inverse="true">
+            <key>
+                <column name="talk_id">
+                    <comment>&#187;&#225;&#187;&#176;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.event.domain.TRecord" />
+        </set>
+        <set name="TTalksForKefuId" inverse="true">
+            <key>
+                <column name="kefu_id">
+                    <comment>&#191;&#205;&#183;&#254;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.event.domain.TTalk" />
+        </set>
+        <set name="TEventsForLeadId" inverse="true">
+            <key>
+                <column name="lead_id">
+                    <comment>&#215;&#233;&#179;&#164;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.event.domain.TEvent" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-11 9:12:32 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.event.domain.TRecord" table="t_record" catalog="manageevent">
+        <id name="recordId" type="java.lang.Integer">
+            <column name="record_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="TUser" class="com.event.domain.TUser" fetch="select">
+            <column name="talk_id">
+                <comment>&#187;&#225;&#187;&#176;id</comment>
+            </column>
+        </many-to-one>
+        <property name="recordForm" type="string">
+            <column name="record_form" length="50">
+                <comment>&#188;&#199;&#194;&#188;&#183;&#162;&#203;&#205;&#200;&#203;</comment>
+            </column>
+        </property>
+        <property name="recordContent" type="string">
+            <column name="record_content" length="65535">
+                <comment>&#188;&#199;&#194;&#188;&#190;&#223;&#204;&#229;&#181;&#196;&#208;&#197;&#207;&#162;</comment>
+            </column>
+        </property>
+        <property name="recordTime" type="timestamp">
+            <column name="record_time" length="19">
+                <comment>&#208;&#197;&#207;&#162;&#183;&#162;&#203;&#205;&#181;&#196;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
