@@ -27,7 +27,7 @@ public class TUser implements java.io.Serializable {
 	private Set TEventsForEventCommitId = new HashSet(0);
 	private Set TTalksForKehuId = new HashSet(0);
 	private Set TEventsForKefuId = new HashSet(0);
-	private Set TRecords = new HashSet(0);
+
 	private Set TTalksForKefuId = new HashSet(0);
 	private Set TEventsForLeadId = new HashSet(0);
 
@@ -41,7 +41,7 @@ public class TUser implements java.io.Serializable {
 	public TUser(int userId, String userRealname, String userPassword, Integer userPriviliage, String userName,
 			String userPhone, String userEmail, Integer userMember, Integer userMax, Integer userComplete,
 			Integer userDepartfb, Integer userUserfb, Set TEventsForEventCommitId, Set TTalksForKehuId,
-			Set TEventsForKefuId, Set TRecords, Set TTalksForKefuId, Set TEventsForLeadId) {
+			Set TEventsForKefuId,Set TTalksForKefuId, Set TEventsForLeadId) {
 		this.userId = userId;
 		this.userRealname = userRealname;
 		this.userPassword = userPassword;
@@ -57,7 +57,6 @@ public class TUser implements java.io.Serializable {
 		this.TEventsForEventCommitId = TEventsForEventCommitId;
 		this.TTalksForKehuId = TTalksForKehuId;
 		this.TEventsForKefuId = TEventsForKefuId;
-		this.TRecords = TRecords;
 		this.TTalksForKefuId = TTalksForKefuId;
 		this.TEventsForLeadId = TEventsForLeadId;
 	}
@@ -180,14 +179,6 @@ public class TUser implements java.io.Serializable {
 
 	public void setTEventsForKefuId(Set TEventsForKefuId) {
 		this.TEventsForKefuId = TEventsForKefuId;
-	}
-
-	public Set getTRecords() {
-		return this.TRecords;
-	}
-
-	public void setTRecords(Set TRecords) {
-		this.TRecords = TRecords;
 	}
 
 	public Set getTTalksForKefuId() {

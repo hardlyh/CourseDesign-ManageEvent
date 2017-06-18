@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
 <link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+<link rel="stylesheet" href="assets/vendor/toastr/toastr.min.css">
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="assets/css/main.css">
 <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -64,30 +65,46 @@
 											<th>邮箱</th>
 											<th>权限</th>
 											<th>工号</th>
-											<th>最大接单数</th>
-											<th>完成单数</th>
+											<th>分配单数</th>
 											<th>待部门反馈</th>
-											<th>待用户反馈</th>
+											
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${sclist }" var="s">
+										<c:forEach items="${pageBean.list }" var="s" varStatus="status">
 											<tr>
-												<td>${s.userId }</td>
+												<td value="${s.userId }">${status.count }</td> 
 												<td>${s.userRealname }</td>
 												<td>${s.userPhone }</td>
 												<td>${s.userEmail }</td>
 												<td value="${s.userPriviliage }">${s.userPriviliage==1?'管理员':(s.userPriviliage==2?'组长':(s.userPriviliage==3?'客服':'客户'))}</td>
 												<td>${s.userMember }</td>
-												<td>${s.userMax }</td>
+												
 												<td>${s.userComplete }</td>
 												<td>${s.userDepartfb }</td>
-												<td>${s.userUserfb }</td>
-												<td><span class="label label-primary" id="editcustorm" style="cursor: pointer">编辑</span> &nbsp; <span class="label label-default">重置</span></td>
+												
+												<td><span class="label label-primary" id="editcustorm" style="cursor: pointer">编辑</span> &nbsp; 
+												<span class="label label-default"  onclick="return confirm('是否删除');"><a href="tUserAction_delete?id=${s.userId }" style="color:#ffffff; cursor: pointer;">删除</a></span></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
+								
+								<!-- 分页 -->
+									<ul class="pagination" id="paging">
+										<li><a id="1"  class="lnr lnr-chevron-left-circle"
+											href="tUserAction_getAllServicer?tag=1&startPage=${pageBean.startPage}&currentPage=${pageBean.currentPage}&condition=${condition}"></a></li>
+										<c:forEach begin="${pageBean.startPage }" end="${pageBean.endPage }"
+											varStatus="s">
+											<li class="${s.index==pageBean.currentPage?'active':'' }"><a id="0" 
+												href="tUserAction_getAllServicer?tag=0&currentPage=${s.index}&startPage=${pageBean.startPage}&condition=${condition}">${s.index }</a></li>
+										</c:forEach>
+									
+										<li><a id="2" class="lnr lnr-chevron-right-circle"
+											href="tUserAction_getAllServicer?tag=2&startPage=${pageBean.startPage}&currentPage=${pageBean.currentPage}&condition=${condition}"></a></li>
+										<li class="disabled"><a>共${pageBean.totalPage }页</a></li>
+									</ul>
+									<!-- end 分页 -->
 							</div>
 						</div>
 						<!-- END BASIC TABLE -->
@@ -111,19 +128,21 @@
 									</button>
 								</div>
 							</div>
-							<div class="panel-body">
+							<div class="panel-body">  
 								<form id="editform" method="post" action="tUserAction_updateTwo">
 									<input type="hidden" name="user.userId"> 
 									<label>姓名:</label> <input type="text" class="form-control" name="user.userRealname" placeholder="姓名"> <br> 
 									<label>电话:</label> 
 									<input type="text" class="form-control" name="user.userPhone" placeholder="电话"> <br> 
 									<label>邮箱:</label> 
-									<input type="email" class="form-control" name="user.userEmail" placeholder="邮箱"><br>
+									<input type="text" class="form-control" name="user.userEmail" placeholder="邮箱"><br>
 									<label>权限:</label> <select class="form-control" name="user.userPriviliage">
 										<option value="4">客户</option>
 										<option value="3">客服</option>
-										<option value="2">组长</option>
-										<option value="1">管理员</option>
+										<c:if test="${admin.userPriviliage==1 }">
+											<option value="2">组长</option>
+										</c:if>
+								
 									</select> <br /> 
 									<button type="submit" class="btn btn-primary" style="float: right;" onclick="return confirm('是否修改');">确定</button>
 								</form>
@@ -156,7 +175,7 @@
 								<label>密码:</label> 
 								<input type="text" class="form-control" name="user.userPassword" placeholder="密码"> <br> 
 								<label>邮箱:</label> 
-								<input type="email" class="form-control" name="user.userEmail" placeholder="邮箱"><br>
+								<input type="text" class="form-control" name="user.userEmail" placeholder="邮箱"><br>
 								<label>电话:</label> 
 								<input type="text" class="form-control" name="user.userPhone" placeholder="电话"><br> 
 								<label>姓名:</label> 
@@ -165,8 +184,9 @@
 								<select class="form-control" name="user.userPriviliage">
 									<option value="4">客户</option>
 									<option value="3">客服</option>
-									<option value="2">组长</option>
-									<option value="1">管理员</option>
+									<c:if test="${admin.userPriviliage==1 }">
+										<option value="2">组长</option>
+									</c:if>
 								</select> 
 								<br /> 
 								<button type="submit" class="btn btn-primary" style="float: right;" onclick="return confirm('是否添加');">确定</button>
@@ -191,8 +211,13 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/vendor/toastr/toastr.min.js"></script>
+	
+	
 </body>
 <script type="text/javascript">
+
+	$("#cygl").attr("class","active");
 	$("#edit").hide();
 	$("#add").hide();
 
@@ -209,8 +234,10 @@
 			var inputs = $("#editform input ").add("#editform select");
 	
 			for (var i = 0; i < inputs.length; i++) {
-	
-				if (i <= 3) {
+				if(i==0){
+					$(inputs[i]).val($(tds[i]).attr("value"));
+				}
+				if (i <= 3 && i!=0) {
 					$(inputs[i]).val($(tds[i]).text());
 				} else {
 					$(inputs[i]).val($(tds[i]).attr("value"));

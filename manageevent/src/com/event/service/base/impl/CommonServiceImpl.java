@@ -65,5 +65,9 @@ public class CommonServiceImpl<T> implements CommonService<T>{
 	public List<T> findByCondition(DetachedCriteria dc) {
 		return commonDao.findByCondition(dc);
 	}
+	
+	public Integer getTotal(DetachedCriteria dc){
+		return commonDao.getTotalCount(dc);
+	}
 
 }

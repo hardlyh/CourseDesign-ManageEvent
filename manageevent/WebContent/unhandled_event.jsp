@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
 	<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="assets/vendor/toastr/toastr.min.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -39,7 +40,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12" >
-							<span class="" style="font-size: 20px;color:#708090;"><b>处理事件</b></span>
+							<span class="" style="font-size: 20px;color:#708090;"><b>分配未处理事件</b></span>
 							
 						</div>
 				    </div>
@@ -51,7 +52,7 @@
 								开始时间: <input type="date" name="startTime" style="width: 15%;height: 30px;">
 								&nbsp;结束时间: <input name="endTime" type="date" style="width: 15%;height: 30px;">
 								&nbsp;&nbsp;
-								状态 : &nbsp;&nbsp;${status}
+								状态 : &nbsp;&nbsp;
 								<select name="status" >
 									<option value="0" ${status=='0'?'selected':'' }>未分配</option>
 									<option value="1" ${status=='1'?'selected':'' }>已分配</option>
@@ -88,14 +89,14 @@
 												<th>内容</th>
 												<th>状态</th>
 												<th>发布时间</th>
-												<th>处理时间</th>
+												<th>结束时间</th>
 												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach items="${pageBean.list }" var="ev">
+										<c:forEach items="${pageBean.list }" var="ev" varStatus="status">
 											<tr>
-												<td id="u_id">${ev.eventId }</td>
+												<td id="u_id" value="${ev.eventId }">${status.count }</td>
 												<td>${ev.eventTitle }</td>
 												<td>${ev.eventContent }</td>
 												<c:if test="${empty ev.TUserByKefuId }">
@@ -108,9 +109,9 @@
 												<td>${ev.eventStarttime }</td>
 												<td>${ev.eventEndtime }</td>
 												<td>
-													<span class="label label-primary tupian">图片</span>
-                                                    <span class="label label-success distribution">分配</span>
-                                                    <span class="label label-default">删除</span>
+													<span class="label label-primary tupian" style="cursor: pointer">图片</span>
+                                                    <span class="label label-success distribution" style="cursor: pointer">分配</span>
+                                                    <span class="label label-default" style="cursor: pointer" onclick="return confirm('是否删除')"><a href="tEventAction_deleteEvent2?id=${ev.eventId }" style="color: #FFFFFF">删除</a></span>
 												</td>
 												<input type="hidden" id="urls" value="${ev.eventUrl }">
 											</tr>
@@ -121,15 +122,15 @@
 									<!-- 分页 -->
 									<ul class="pagination" id="paging">
 										<li><a id="1"  class="lnr lnr-chevron-left-circle"
-											href="${targetAction }?tag=1&startPage=${pageBean.startPage}&currentPage=${pageBean.currentPage}&condition=${condition}&startTime=${startTime}&endTime=${endTime}&status=${status}"></a></li>
+											href="tEventAction_getUnEvent?tag=1&startPage=${pageBean.startPage}&currentPage=${pageBean.currentPage}&condition=${condition}&startTime=${startTime}&endTime=${endTime}&status=${status}"></a></li>
 										<c:forEach begin="${pageBean.startPage }" end="${pageBean.endPage }"
 											varStatus="s">
 											<li class="${s.index==pageBean.currentPage?'active':'' }"><a id="0" 
-												href="${targetAction }?tag=0&currentPage=${s.index}&startPage=${pageBean.startPage}&condition=${condition}&startTime=${startTime}&endTime=${endTime}&status=${status}">${s.index }</a></li>
+												href="tEventAction_getUnEvent?tag=0&currentPage=${s.index}&startPage=${pageBean.startPage}&condition=${condition}&startTime=${startTime}&endTime=${endTime}&status=${status}">${s.index }</a></li>
 										</c:forEach>
 									
 										<li><a id="2" class="lnr lnr-chevron-right-circle"
-											href="${targetAction }?tag=2&startPage=${pageBean.startPage}&currentPage=${pageBean.currentPage}&condition=${condition}&startTime=${startTime}&endTime=${endTime}&status=${status}"></a></li>
+											href="tEventAction_getUnEvent	?tag=2&startPage=${pageBean.startPage}&currentPage=${pageBean.currentPage}&condition=${condition}&startTime=${startTime}&endTime=${endTime}&status=${status}"></a></li>
 										<li class="disabled"><a>共${pageBean.totalPage }页</a></li>
 									</ul>
 									<!-- end 分页 -->
@@ -185,7 +186,7 @@
 											
 	                                       <li id="c_bottom"></li>
 	                                    </ul>
-	                                    <button type="submit" class="btn btn-primary" style="float: right;">确定</button>
+	                                    <button type="submit" class="btn btn-primary" style="float: right;" onclick="return confirm('是否确定分配');">确定</button>
                                     </form>
                                 </div>
                             </div>		
@@ -211,41 +212,54 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
-
+	<script src="assets/vendor/toastr/toastr.min.js"></script>
 	<script type="text/javascript">
+	
+		$("#wcl").attr("class","active");
 		$("#imagelist").hide();
 
 		$("#allot").hide();
-
+		
 
 		$(".tupian").click(function() {
-
+			
 		    if ($("#imagelist").is(':hidden')) {
+		    	 $(".image").show();
 		        $("#imagelist").show(1000, 'linear');
+		        var input=$(this).parent().siblings(" :input");
+			   var urls=$(input).val();
+			   var url=urls.split(",");
+			  
+			   
+			   for(var i=0;i<url.length;i++){
+				   if(url[i]!=''){
+			   			$("#bound").before($(".image").clone().attr("class","clone2")).append("<br>");
+				   }
+			   }
+			   
+			   $(".image").hide();
+			   
 		    } else {
+		    	
+		    	
+		    	$(".clone2").each(function(){
+		    		$(this).remove();
+		    	});
 		        $("#imagelist").hide(1000, 'linear');
+		      
 		    }
-
-
-		   var input=$(this).parent().siblings(" :input");
-		   var urls=$(input).val();
-		   var url=urls.split(",");
-		  
-		   for(var i=0;i<url.length-2;i++){
-		   		$("#bound").before($(".image").clone().attr("class",""));
-		   }
-
-		   var imags=$("#imags li img");
+		   
+		  var imags=$("#imags .clone2 img");
 		  
 		   for(var i=0;i<imags.length;i++){
 			    $(imags[i]).attr("src","./images/"+url[i]);
 		   }              
-
+		
 		});
 
 
 		$(".distribution").click(function() {
-			var value=$(this).parent().siblings("#u_id").text();
+			var value=$(this).parent().siblings("#u_id").attr("value");
 			$("input[name='id']").val(value);
 			if ($("#allot").is(':hidden')) {
 				$("#allot").show(1000, 'linear');

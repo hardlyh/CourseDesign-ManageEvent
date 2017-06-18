@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
 	<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="assets/vendor/toastr/toastr.min.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -41,7 +42,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<span class="" style="font-size: 20px;color:#708090;"><b>事件管理</b></span>
-							<button  href="#k" data-toggle="collapse" type="button" class="btn btn-primary"  style="float: right;" >添加事件</button>
+							<button  href="#k" data-toggle="collapse" type="button" class="btn btn-primary"  style="float: right;" id="addevent" >添加事件</button>
 						</div>
 						</div>
 				    </div>
@@ -58,11 +59,11 @@
 										<colgroup>
 											<col style="width: 5%">
 											<col style="width: 20%">
-											<col style="width: 40%;">
+											<col style="width: 35%;">
+											<col style="width: 10%">
+											<col style="width: 10%">
 											<col style="width: 8%">
-											<col style="width: 8%">
-											<col style="width: 8%">
-											<col style="width: 5%">
+											<col style="width: 12%">
 										</colgroup>
 										<thead>
 											<tr>
@@ -70,27 +71,32 @@
 												<th>标题</th>
 												<th>内容</th>
 												<th>发布时间</th>
-												<th>处理时间</th>
+												<th>结束时间</th>
 												<th>客服</th>
 												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach items="${user2.TEventsForEventCommitId }" var="commit">
+										<c:forEach items="${user2.TEventsForEventCommitId }" var="commit" varStatus="status">
 											<tr>
-												<td>${commit.eventId }</td>
+												<td>${status.count }</td>
 												<td>${commit.eventTitle }</td>
 												<td>${commit.eventContent }</td>
 												<td>${commit.eventStarttime }</td>
-												<td>2017-05-02</td>
+												<td>${commit.eventEndtime }</td>
 												<td>${commit.TUserByKefuId.userRealname  }</td>
 												<td>
-													<span class="label label-default"><a onclick="return confirm('是否删除');" href="tEventAction_deleteEvent?id=${commit.eventId }" style="color:#ffffff;" >删除</a></span>
+													<span class="label label-default"><a onclick="return confirm('是否删除');" href="tEventAction_deleteEvent?id=${commit.eventId }" style="color:#ffffff;cursor: pointer;" >删除</a></span>
+													<c:if test="${!empty commit.TUserByKefuId  }">
+													<span class="label label-default"><a  href="talkAction_getTalk?id=${commit.eventId }" style="color:#ffffff;cursor: pointer;" >聊天</a></span>
+													</c:if>
 												</td>
 											</tr>
 										</c:forEach>
 										</tbody>
 									</table>
+									
+								
 								</div>
 							</div>
 							<!-- END BASIC TABLE -->
@@ -101,7 +107,7 @@
 					
 				
 						<div class="row">
-							<div class="col-md-6" style="margin-left: 50px; ">
+							<div class="col-md-6" style="margin-left: 50px; " id="allot">
 								<!-- RECENT PURCHASES -->
 								<div class="panel" id="k">
 									<div class="panel-heading">
@@ -146,9 +152,20 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/vendor/toastr/toastr.min.js"></script>
 		<script type="text/javascript">
+		$("#sjgl").attr("class","active");
+		$("#allot").hide();
+		$("#addevent").click(function(){
+			if ($("#allot").is(':hidden')) {
+				$("#allot").show(1000, 'linear');
+			} else {
+				$("#allot").hide(1000, 'linear');
+			}
+			
+		});
 		
-
+		
 		$("#add").click(function(){
 			$(this).before($("#file").clone());
 			$(this).before("<br/>");

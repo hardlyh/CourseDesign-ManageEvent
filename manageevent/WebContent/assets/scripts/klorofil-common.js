@@ -1,4 +1,27 @@
 $(document).ready(function() {
+	var _success=$("#information").val();
+	var _error=$("#information2").val();
+	//提示框(成功/错误)
+	if(_success!=null&&_success!=""){
+		$context="success";
+		$positionClass = 'toast-' + "top-right";
+		toastr.remove();
+		toastr[$context](_success, '' , { positionClass: $positionClass });
+	}else if(_error!=null&&_error!=""){
+		$context="error";
+		$positionClass = 'toast-' + "top-right";
+		toastr.remove();
+		toastr[$context](_error, '' , { positionClass: $positionClass });
+	}
+	//是否提交
+	$(".delete_herf").click(function(){
+		 return confirm("是否删除");
+	});
+	
+	$(".update_herf").click(function(){
+		 return confirm("是否提交");
+	});
+
 
 	/*-----------------------------------/
 	/*	TOP NAVIGATION AND LAYOUT
@@ -146,9 +169,9 @@ $(document).ready(function() {
 	if($('#toastr-demo').length > 0) {
 		toastr.options.timeOut = "false";
 		toastr.options.closeButton = true;
-		toastr['info']('Hi there, this is notification demo with HTML support. So, you can add HTML elements like <a href="#">this link</a>');
-
+		
 		$('.btn-toastr').on('click', function() {
+			$(this).data('message','_success');
 			$context = $(this).data('context');
 			$message = $(this).data('message');
 			$position = $(this).data('position');
@@ -221,5 +244,8 @@ $.fn.clickToggle = function( f1, f2 ) {
 	});
 
 }
+
+
+
 
 

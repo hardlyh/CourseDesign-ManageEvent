@@ -23,8 +23,14 @@
                 <comment>&#185;&#171;&#184;&#230;logo&#181;&#196;&#181;&#216;&#214;&#183;</comment>
             </column>
         </property>
-        <property name="userName" type="java.lang.Integer">
+        <property name="userName" type="string">
             <column name="user_name">
+                <comment>&#181;&#199;&#194;&#189;&#200;&#203;&#181;&#196;id</comment>
+            </column>
+        </property>
+        
+        <property name="placardTime" type="date">
+            <column name="placard_time">
                 <comment>&#181;&#199;&#194;&#189;&#200;&#203;&#181;&#196;id</comment>
             </column>
         </property>

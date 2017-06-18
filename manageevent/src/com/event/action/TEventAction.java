@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -13,8 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import com.event.domain.TEvent;
 import com.event.domain.TUser;
 import com.event.service.TEventService;
-import com.event.util.ContidionBean;
-import com.event.util.EmptyString;
+import com.event.service.TUserService;
 import com.event.util.PageBean;
 import com.event.util.TimeUtils;
 import com.event.util.UploadUtil;
@@ -25,7 +26,9 @@ public class TEventAction extends ActionSupport {
 	private String id;
 
 	private int currentPage;
-
+	
+	private TUserService service;
+	
 	private Integer startPage;
 
 	private int tag;
@@ -37,14 +40,24 @@ public class TEventAction extends ActionSupport {
 	private TEvent event;
 
 	private File[] files;
-	
+
 	private String startTime;
-	
+
 	private String endTime;
-	
-	private String status="0";
-	
+
+	private String status = "0";
+
 	private TEventService tEventService;
+
+
+
+	public TUserService getService() {
+		return service;
+	}
+
+	public void setService(TUserService service) {
+		this.service = service;
+	}
 
 	public String getStatus() {
 		return status;
@@ -118,8 +131,6 @@ public class TEventAction extends ActionSupport {
 		this.id = id;
 	}
 
-	
-
 	public File[] getFiles() {
 		return files;
 	}
@@ -144,6 +155,7 @@ public class TEventAction extends ActionSupport {
 		this.tEventService = tEventService;
 	}
 
+	// 保存事件
 	public String saveEvent() throws IOException {
 		StringBuffer sb = new StringBuffer();
 		TUser tUser = (TUser) ActionContext.getContext().getSession().get("admin");
@@ -156,54 +168,218 @@ public class TEventAction extends ActionSupport {
 				sb = UploadUtil.Upload(f, sb);
 			}
 		}
-
-		System.out.println(sb);
 		event.setEventUrl(sb.toString());
 		tEventService.saveEntry(event);
+		ActionContext.getContext().put("success", "保存事件成功");
 		return "eventlist";
 	}
 
+	// 得到所有为分配的事件
 	public String getUnEvent() throws ParseException {
 		DetachedCriteria dc = DetachedCriteria.forClass(TEvent.class);
-		if(this.status.equals("0")){
+		if (this.status.equals("0")) {
 			dc.add(Restrictions.eq("eventStatus", 0));
-		}else if(this.status.equals("1")){
-			dc.add(Restrictions.eq("eventStatus", 1));
+		} else if (this.status.equals("1")) {
+			dc.add(Restrictions.ne("eventStatus", 3));
+			dc.add(Restrictions.ne("eventStatus", 0));
 		}
 		
+
 		dc.addOrder(Order.desc("eventStarttime"));
 		if (StringUtils.isNotBlank(this.condition)) {
 			dc.add(Restrictions.like("eventTitle", "%" + this.condition + "%"));
 		}
-		if (startTime!=null && endTime!=null) {
-			System.out.println("start "+ startTime);
-			System.out.println("end "+endTime);
-			if (this.startTime.length()>0 &&  this.endTime.length()>0) {
-				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), TimeUtils.StringToDate(this.endTime)));
-			} else if (this.startTime.length()>0) {
+		if (startTime != null && endTime != null) {
+
+			if (this.startTime.length() > 0 && this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.startTime.length() > 0) {
 				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), new Date()));
-			} else if (this.endTime.length()>0) {
-				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),TimeUtils.StringToDate(this.endTime) ));
+			} else if (this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),
+						TimeUtils.StringToDate(this.endTime)));
 			}
 		}
-		PageBean pb = tEventService.getPageBean(dc, currentPage, 3, tag, startPage);
+		PageBean pb = tEventService.getPageBean(dc, currentPage, 2, tag, startPage);
 		ActionContext.getContext().put("pageBean", pb);
 		return "uneventlist";
 	}
 
+	// 删除事件,跳转到客户事件管理页面
 	public String deleteEvent() {
 		tEventService.deleteEntry(Integer.parseInt(id));
+		ActionContext.getContext().put("success", "删除事件成功");
 		return "eventlist";
 	}
-
-	public String allotByEvent() {
-		TEvent event = tEventService.getEntryById(Integer.parseInt(id));
-		TUser tUser = new TUser();
-		tUser.setUserId(Integer.parseInt(people));
-		event.setEventStatus(1);
-		event.setTUserByKefuId(tUser);
-		tEventService.updateEntry(event);
-		return "uneventlistAction";
+	
+	// 删除事件,跳转到分配事件
+	public String deleteEvent2(){
+		tEventService.deleteEntry(Integer.parseInt(id));
+		ActionContext.getContext().put("success", "删除事件成功");
+		return "uneventAction";
 	}
+
+	// 分配事件,并且添加此事件对应的回话记录
+	public String allotByEvent() {
+		System.out.println("people : "+people);
+		TUser user2 = (TUser) ActionContext.getContext().getSession().get("admin");
+		TEvent event = tEventService.getEntryById(Integer.parseInt(id));  //获得事件 
+		TUser tUser2 = service.getEntryById(Integer.parseInt(people)); //获得客服
+		//得到客服对象并且将分配事件+1
+		
+		tUser2.setUserComplete(tUser2.getUserComplete()+1);
+		// 设置客服id
+		
+		event.setEventStatus(1);
+		event.setTUserByKefuId(tUser2);
+		
+		// 设置分配人id
+		event.setTUserByLeadId(user2);
+		
+		tEventService.updateEntry(event);
+		ActionContext.getContext().put("talkEvent", event);
+		return "allotTalkAction";
+	}
+
+	// 得到关于客服所有的事件
+	public String treatByKefu() throws ParseException {
+		TUser tUser = (TUser) ActionContext.getContext().getSession().get("admin");
+		DetachedCriteria dc = DetachedCriteria.forClass(TEvent.class);
+		dc.add(Restrictions.ne("eventStatus", 3));
+		dc.addOrder(Order.desc("eventStarttime"));
+
+		if (startTime != null && endTime != null) {
+			if (this.startTime.length() > 0 && this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.startTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), new Date()));
+			} else if (this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.condition.length() > 0) {
+				dc.add(Restrictions.like("eventTitle", "%" + this.condition + "%"));
+			}
+
+		}
+		dc.add(Restrictions.eq("TUserByKefuId.userId", tUser.getUserId()));
+		PageBean pageBean=tEventService.getPageBean(dc, currentPage, 2, tag, startPage);
+		ActionContext.getContext().put("pageBean", pageBean);
+		return "treatByKefu";
+	}
+
+	// 事件完成
+	public String achiveEvent() throws IOException {
+		TEvent event = this.tEventService.getEntryById(Integer.parseInt(this.id));
+		ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+		if (event.getEventStatus() != 3) {
+			event.setEventStatus(3);
+			ServletActionContext.getResponse().getWriter().write("事件完成");
+		} else {
+			ServletActionContext.getResponse().getWriter().write("事件已完成");
+		}
+		event.setEventEndtime(new Date());
+		tEventService.updateEntry(event);
+		return null;
+	}
+
+	// 添加反馈
+	public String feedBack() throws IOException {
+		TUser tUser=(TUser) ActionContext.getContext().getSession().get("admin");
+		TEvent event = this.tEventService.getEntryById(Integer.parseInt(this.id));
+		ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+		if (event.getEventStatus() != 4) {
+			event.setEventStatus(4);
+			ServletActionContext.getResponse().getWriter().write("添加反馈成功");
+		} else {
+			ServletActionContext.getResponse().getWriter().write("事件已在反馈列表");
+		}
+		
+		tUser.setUserDepartfb(tUser.getUserDepartfb()+1);
+		service.updateEntry(tUser);
+		tEventService.updateEntry(event);
+		return null;
+	}
+
+	// 跳转待部门反馈
+	public String goFeedBack() throws ParseException {
+		TUser tUser = (TUser) ActionContext.getContext().getSession().get("admin");
+		DetachedCriteria dc = DetachedCriteria.forClass(TEvent.class);
+		dc.add(Restrictions.eq("TUserByKefuId.userId", tUser.getUserId()));
+		dc.add(Restrictions.eq("eventStatus", 4));
+		dc.addOrder(Order.desc("eventStarttime"));
+		// 可以封装
+		if (startTime != null && endTime != null) {
+			if (this.startTime.length() > 0 && this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.startTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), new Date()));
+			} else if (this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.condition.length() > 0) {
+				dc.add(Restrictions.like("eventTitle", "%" + this.condition + "%"));
+			}
+		}
+		PageBean pageBean=tEventService.getPageBean(dc, currentPage, 2, tag, startPage);
+		ActionContext.getContext().put("pageBean", pageBean);
+		return "feedBack";
+	}
+	
+	
+	// 所有待部门反馈事件
+	public String goAllFeedBack() throws ParseException{
+		DetachedCriteria dc = DetachedCriteria.forClass(TEvent.class);
+		dc.add(Restrictions.eq("eventStatus", 4));
+		dc.addOrder(Order.desc("eventStarttime"));
+		// 可以封装
+		if (startTime != null && endTime != null) {
+			if (this.startTime.length() > 0 && this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.startTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), new Date()));
+			} else if (this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.condition.length() > 0) {
+				dc.add(Restrictions.like("eventTitle", "%" + this.condition + "%"));
+			}
+		}
+		PageBean pageBean=tEventService.getPageBean(dc, currentPage, 2, tag, startPage);
+		ActionContext.getContext().put("pageBean", pageBean);
+		return "allFeedBack";
+		
+	}
+	
+	// 个人历史事件
+	public String getSelfH() throws ParseException{
+		TUser tUser=(TUser) ActionContext.getContext().getSession().get("admin");
+		DetachedCriteria dc = DetachedCriteria.forClass(TEvent.class);
+		dc.add(Restrictions.eq("eventStatus", 3));
+		dc.add(Restrictions.eq("TUserByKefuId.userId", tUser.getUserId()));
+		dc.addOrder(Order.desc("eventStarttime"));
+	
+		if (startTime != null && endTime != null) {
+			if (this.startTime.length() > 0 && this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.startTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), new Date()));
+			} else if (this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.condition.length() > 0) {
+				dc.add(Restrictions.like("eventTitle", "%" + this.condition + "%"));
+			}
+		}
+		PageBean pageBean=tEventService.getPageBean(dc, currentPage, 2, tag, startPage);
+		ActionContext.getContext().put("pageBean", pageBean);
+		return "myhistory";
+	}
+	
+	
 
 }

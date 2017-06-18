@@ -30,10 +30,11 @@
 			<div class="vertical-align-middle">
 				<div class="auth-box ">
 					<div class="left">
+					<!-- style="margin-top:-100%;" -->
 						<div class="content">
 							<div class="header">
 								<div class="logo text-center"><img src="assets/img/logo-dark.png" alt="Klorofil Logo"></div>
-								<p class="lead">登录到您的帐户</p>
+								<p class="lead">Login to your account</p>
 							</div>
 							<form class="form-auth-small" action="tUserAction_login" method="post">
 								<div class="form-group">
@@ -60,8 +61,8 @@
 					<div class="right">
 						<div class="overlay"></div>
 						<div class="content text">
-							<h1 class="heading">幸福生活需要我们一起创造</h1>
-							<p>by XLZ</p>
+							<h1 class="heading">事件管理系统</h1>
+							<p>by The event</p>
 						</div>
 					</div>
 					<div class="clearfix"></div>
@@ -69,6 +70,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- END WRAPPER -->
 </body>
 

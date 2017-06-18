@@ -9,7 +9,7 @@ import java.util.Date;
 public class TRecord implements java.io.Serializable {
 
 	private Integer recordId;
-	private TUser TUser;
+	private TTalk talk;
 	private String recordForm;
 	private String recordContent;
 	private Date recordTime;
@@ -17,8 +17,8 @@ public class TRecord implements java.io.Serializable {
 	public TRecord() {
 	}
 
-	public TRecord(TUser TUser, String recordForm, String recordContent, Date recordTime) {
-		this.TUser = TUser;
+	public TRecord(TTalk talk, String recordForm, String recordContent, Date recordTime) {
+		this.talk = talk;
 		this.recordForm = recordForm;
 		this.recordContent = recordContent;
 		this.recordTime = recordTime;
@@ -32,12 +32,14 @@ public class TRecord implements java.io.Serializable {
 		this.recordId = recordId;
 	}
 
-	public TUser getTUser() {
-		return this.TUser;
+	
+
+	public TTalk getTalk() {
+		return talk;
 	}
 
-	public void setTUser(TUser TUser) {
-		this.TUser = TUser;
+	public void setTalk(TTalk talk) {
+		this.talk = talk;
 	}
 
 	public String getRecordForm() {

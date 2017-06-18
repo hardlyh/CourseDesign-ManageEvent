@@ -86,14 +86,7 @@
             </key>
             <one-to-many class="com.event.domain.TEvent" />
         </set>
-        <set name="TRecords" inverse="true">
-            <key>
-                <column name="talk_id">
-                    <comment>&#187;&#225;&#187;&#176;id</comment>
-                </column>
-            </key>
-            <one-to-many class="com.event.domain.TRecord" />
-        </set>
+       
         <set name="TTalksForKefuId" inverse="true">
             <key>
                 <column name="kefu_id">

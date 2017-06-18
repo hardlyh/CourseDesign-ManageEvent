@@ -8,7 +8,7 @@
             <column name="record_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="TUser" class="com.event.domain.TUser" fetch="select">
+        <many-to-one name="talk" class="com.event.domain.TTalk" fetch="select">
             <column name="talk_id">
                 <comment>&#187;&#225;&#187;&#176;id</comment>
             </column>

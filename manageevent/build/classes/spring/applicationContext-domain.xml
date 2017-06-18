@@ -38,11 +38,52 @@
 	
 	<bean id="tEventAction" class="com.event.action.TEventAction" scope="prototype">
 		<property name="tEventService" ref="TEventService"></property>		
+		<property name="service" ref="tUserService"></property>		
 	</bean>
 	
 	<bean id="hisAction" class="com.event.action.HistoryEventAction">
 		<property name="tEventService" ref="TEventService"></property>	
 	</bean>
+	
+
+	
+	<!-- TTalk -->
+	
+	<bean id="tTalkDao" class="com.event.dao.impl.TTalkDaoImpl" parent="commonDao"></bean>
+	
+	<bean id="tTalkService" class="com.event.service.impl.TTalkServiceImpl">
+		<property name="commonDao" ref="tTalkDao"></property>
+	</bean>
+	
+	<bean id="tRecordDao" class="com.event.dao.impl.TRecordDaoImpl" parent="commonDao"></bean>
+	
+	<bean id="tRecordService" class="com.event.service.impl.TRecordServiceImpl">
+		<property name="commonDao" ref="tRecordDao"></property>
+	</bean>
+	
+	<bean id="tTalkAction" class="com.event.action.TTalkAction" scope="prototype">
+		<property name="talkService" ref="tTalkService"></property>		
+		<property name="recordService" ref="tRecordService"></property>
+	</bean>
+	
+	<!-- TPlacard -->
+	
+	<bean id="tPlacardDao" class="com.event.dao.impl.TPlacardDaoImpl" parent="commonDao"></bean>
+	
+	<bean id="tPlacardService" class="com.event.service.impl.TPlacardServiceImpl">
+		<property name="commonDao" ref="tPlacardDao"></property>
+	</bean>
+	
+	<bean id="tPlacardAction" class="com.event.action.TPlacardAction" scope="prototype">
+		<property name="placardService" ref="tPlacardService"></property>		
+	</bean>
+	
+	<bean id="countAction" class="com.event.action.countAction">
+		<property name="tEventService" ref="TEventService"></property>		
+		<property name="service" ref="tUserService"></property>		
+	</bean>
+	
+	
 		
 		
 </beans>

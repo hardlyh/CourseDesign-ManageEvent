@@ -52,5 +52,7 @@ public interface CommonService<T> {
 	public PageBean getPageBean(DetachedCriteria dc, Integer currentPage, Integer pageSize,int tag,Integer startPage);
 	
 	public List<T> findByCondition(DetachedCriteria dc);
+	
+	public Integer getTotal(DetachedCriteria dc);
 
 }

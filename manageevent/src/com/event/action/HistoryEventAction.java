@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.event.domain.TEvent;
 import com.event.service.TEventService;
+import com.event.util.PageBean;
 import com.event.util.TimeUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -26,13 +27,13 @@ public class HistoryEventAction extends ActionSupport {
 
 	private String endTime; // 结束时间
 
-
-
 	private Integer eventId = 0;
 
 	private String kefuName;
 
-	private String kefuNumber;
+	private String title;
+
+	private TEventService tEventService;
 
 	public Integer getEventId() {
 		return eventId;
@@ -50,15 +51,13 @@ public class HistoryEventAction extends ActionSupport {
 		this.kefuName = kefuName;
 	}
 
-	public String getKefuNumber() {
-		return kefuNumber;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setKefuNumber(String kefuNumber) {
-		this.kefuNumber = kefuNumber;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-
-	private TEventService tEventService;
 
 	public int getCurrentPage() {
 		return currentPage;
@@ -100,7 +99,6 @@ public class HistoryEventAction extends ActionSupport {
 		this.endTime = endTime;
 	}
 
-
 	public TEventService gettEventService() {
 		return tEventService;
 	}
@@ -108,27 +106,31 @@ public class HistoryEventAction extends ActionSupport {
 	public void settEventService(TEventService tEventService) {
 		this.tEventService = tEventService;
 	}
-	
-	//得到所有已经分配的历史事件
-	
-	public String getHtEvent() throws ParseException { 
+
+	// 得到所有已经分配的历史事件
+
+	public String getHtEvent() throws ParseException {
 		DetachedCriteria dc = DetachedCriteria.forClass(TEvent.class);
-		dc.add(Restrictions.isNotNull("TUserByKefuId"));
+		dc.add(Restrictions.eq("eventStatus",3));
 		dc.addOrder(Order.desc("eventStarttime"));
-		if (startTime!=null && endTime!=null) {
-			if (this.startTime.length()>0 &&  this.endTime.length()>0) {
-				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), TimeUtils.StringToDate(this.endTime)));
-			} else if (this.startTime.length()>0) {
+		if (startTime != null && endTime != null) {
+			if (this.startTime.length() > 0 && this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime),
+						TimeUtils.StringToDate(this.endTime)));
+			} else if (this.startTime.length() > 0) {
 				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate(this.startTime), new Date()));
-			} else if (this.endTime.length()>0) {
-				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),TimeUtils.StringToDate(this.endTime) ));
+			} else if (this.endTime.length() > 0) {
+				dc.add(Restrictions.between("eventStarttime", TimeUtils.StringToDate("2000-12-31"),
+						TimeUtils.StringToDate(this.endTime)));
+			}else if(this.title.length()>0){
+				dc.add(Restrictions.like("eventTitle", "%" + this.title + "%"));
 			}
 		}
-		//PageBean pb = tEventService.getPageBean(dc, currentPage, 3, tag, startPage);
-		List<TEvent> list=tEventService.findByCondition(dc);
-		ActionContext.getContext().put("pageBean", list);
+		// PageBean pb = tEventService.getPageBean(dc, currentPage, 3, tag,
+		// startPage);
+		PageBean pageBean=tEventService.getPageBean(dc, currentPage, 2, tag, startPage);
+		ActionContext.getContext().put("pageBean", pageBean);
 		return "historyEvent";
 	}
-
 
 }

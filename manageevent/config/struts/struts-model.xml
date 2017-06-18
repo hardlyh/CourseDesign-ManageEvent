@@ -39,13 +39,35 @@
 		
 		<action name="tEventAction_*" class="tEventAction" method="{1}">
 			<result name="eventlist" type="chain">tUserAction_getEvent</result>
+			<result name="uneventAction" type="chain">tEventAction_getUnEvent</result>
 			<result name="uneventlist">unhandled_event.jsp</result>
 			<result name="uneventlistAction" type="chain">tEventAction_getUnEvent</result>
+			<result name="treatByKefu">handle_event.jsp</result>
+			<result name="allotTalkAction" type="chain">talkAction_allotTalk</result>
+			<result name="feedBack">feedback_event.jsp</result>
+			<result name="allFeedBack">allfeedback.jsp</result>
+			<result name="myhistory">myhistory_event.jsp</result>
 		</action>
 		
 		
 		<action name="hisAction_*" class="hisAction" method="{1}">
 			<result name="historyEvent">history_event.jsp</result>
+		</action>
+		
+		<action name="talkAction_*" class="tTalkAction" method="{1}">
+			<result name="uneventlistAction" type="chain">tEventAction_getUnEvent</result>
+			<result name="chat">chat.jsp</result>
+			<result name="chat2">chat2.jsp</result>
+		</action>
+		
+		<action name="placardAction_*" class="tPlacardAction" method="{1}">
+			<result name="placardList">placard.jsp</result>
+			<result name="placardListAction" type="chain">placardAction_getPlacard</result>
+		</action>
+		
+		<action name="countAction_*" class="countAction" method="{1}">
+			<result name="count">count.jsp</result>
+			<result name="count2">count2.jsp</result>
 		</action>
 		
 	</package>

@@ -18,5 +18,20 @@
                 <comment>&#191;&#205;&#187;&#167;id</comment>
             </column>
         </many-to-one>
+        
+        <property name="eventId" type="java.lang.Integer">
+            <column name="event_id" length="20">
+                <comment>&#188;&#199;&#194;&#188;&#190;&#223;&#204;&#229;&#181;&#196;&#208;&#197;&#207;&#162;</comment>
+            </column>
+        </property>
+        
+      	 <set name="records"  inverse="true" order-by="recordTime">
+            <key>
+                <column name="talk_id">
+                    <comment>&#204;&#225;&#189;&#187;&#211;&#195;&#187;&#167;&#181;&#196;id</comment>
+                </column>
+            </key>
+        	<one-to-many class="com.event.domain.TRecord" />
+        </set>
     </class>
 </hibernate-mapping>

@@ -22,9 +22,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
 		this.hibernateTemplate = hibernateTemplate;
-		
 	}
-	
 
 	private Class classt;
 

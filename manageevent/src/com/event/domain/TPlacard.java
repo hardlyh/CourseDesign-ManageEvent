@@ -1,4 +1,7 @@
 package com.event.domain;
+
+import java.util.Date;
+
 // Generated 2017-6-11 9:12:32 by Hibernate Tools 3.2.2.GA
 
 /**
@@ -10,16 +13,26 @@ public class TPlacard implements java.io.Serializable {
 	private String placardTitle;
 	private String placardContent;
 	private String placardUrl;
-	private Integer userName;
+	private String userName;
+	private Date placardTime;
 
 	public TPlacard() {
 	}
 
-	public TPlacard(String placardTitle, String placardContent, String placardUrl, Integer userName) {
+	public TPlacard(String placardTitle, String placardContent, String placardUrl, String userName,Date placardTime) {
 		this.placardTitle = placardTitle;
 		this.placardContent = placardContent;
 		this.placardUrl = placardUrl;
 		this.userName = userName;
+		this.placardTime=placardTime;
+	}
+
+	public Date getPlacardTime() {
+		return placardTime;
+	}
+
+	public void setPlacardTime(Date placardTime) {
+		this.placardTime = placardTime;
 	}
 
 	public Integer getPlacardId() {
@@ -54,12 +67,14 @@ public class TPlacard implements java.io.Serializable {
 		this.placardUrl = placardUrl;
 	}
 
-	public Integer getUserName() {
-		return this.userName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserName(Integer userName) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	
 
 }
